@@ -1,0 +1,147 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@theme inline {
+  --font-sans: "Hanken Grotesk", ui-sans-serif, sans-serif;
+  --font-heading: "Instrument Serif", ui-serif, serif;
+  --font-serif: "Instrument Serif", ui-serif, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --color-paper: var(--paper);
+  --color-paper-deep: var(--paper-deep);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-rule: var(--rule);
+  --color-vermilion: var(--vermilion);
+  --color-jade: var(--jade);
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --paper: #f2ecdf;
+  --paper-deep: #e8dfcc;
+  --ink: #1b1915;
+  --ink-soft: #5f584b;
+  --rule: #cdc2aa;
+  --vermilion: #c23b22;
+  --jade: #2f6b4f;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: #faf6ec;
+  --card-foreground: var(--ink);
+  --popover: #faf6ec;
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: #f7f2e6;
+  --secondary: var(--paper-deep);
+  --secondary-foreground: var(--ink);
+  --muted: #ebe3d1;
+  --muted-foreground: var(--ink-soft);
+  --accent: var(--paper-deep);
+  --accent-foreground: var(--ink);
+  --destructive: var(--vermilion);
+  --border: var(--rule);
+  --input: #c4b89d;
+  --ring: #8a7d63;
+  --radius: 0.25rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    @apply bg-background text-foreground;
+    /* paper grain */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--vermilion) 22%, transparent);
+  }
+}
+
+@layer components {
+  .ruled {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 31px,
+      color-mix(in srgb, var(--rule) 55%, transparent) 31px,
+      color-mix(in srgb, var(--rule) 55%, transparent) 32px
+    );
+  }
+  .eyebrow {
+    @apply font-mono text-[0.7rem] tracking-[0.18em] uppercase text-ink-soft;
+  }
+}
+
+@keyframes stamp-in {
+  0% {
+    opacity: 0;
+    transform: scale(1.9) rotate(var(--stamp-rotate, -9deg));
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.94) rotate(var(--stamp-rotate, -9deg));
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(var(--stamp-rotate, -9deg));
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-stamp {
+  animation: stamp-in 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+.animate-rise {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-stamp,
+  .animate-rise {
+    animation: none;
+  }
+}
