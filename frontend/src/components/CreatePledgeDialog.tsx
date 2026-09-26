@@ -26,6 +26,9 @@ import { createPledge, sameAddress } from "@/lib/keptword"
 
 const ADDRESS_RE = /^0x[0-9a-fA-F]{40}$/
 
+// URLs and addresses never contain whitespace; also drops invisible chars (zero-width, BOM, bidi marks) picked up by copy-paste.
+const stripInvisible = (value: string) => value.replace(/[\s\p{Cf}]/gu, "")
+
 // Local calendar day + "HH:MM" -> unix seconds, or NaN when either part is missing.
 function toTimestamp(day: Date | undefined, time: string) {
   const [h, m] = time.split(":").map(Number)
@@ -95,7 +98,7 @@ export function CreatePledgeDialog() {
 
   if (!account) {
     return (
-      <Button size="lg" className="h-11 rounded-[3px]" onClick={openConnectModal}>
+      <Button size="lg" className="h-10" onClick={openConnectModal}>
         <PlusIcon /> Make a pledge
       </Button>
     )
@@ -104,15 +107,15 @@ export function CreatePledgeDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="lg" className="h-11 rounded-[3px]">
+        <Button size="lg" className="h-10">
           <PlusIcon /> Make a pledge
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-card rounded-[3px] sm:max-w-lg">
+      <DialogContent className="bg-card sm:max-w-lg">
         <form onSubmit={onSubmit} className="grid gap-4">
           <DialogHeader>
-            <span className="eyebrow">New covenant</span>
-            <DialogTitle className="font-serif text-3xl font-normal">Make a pledge</DialogTitle>
+            <span className="eyebrow">New pledge</span>
+            <DialogTitle className="text-2xl font-semibold tracking-tight">Make a pledge</DialogTitle>
             <DialogDescription>
               Stake GEN on a public promise. After the deadline, GenLayer validators read your evidence page and decide
               whether you kept your word.
@@ -137,7 +140,7 @@ export function CreatePledgeDialog() {
               id="evidence"
               type="url"
               value={evidenceUrl}
-              onChange={(e) => setEvidenceUrl(e.target.value)}
+              onChange={(e) => setEvidenceUrl(stripInvisible(e.target.value))}
               placeholder="https://github.com/your-org/your-repo/releases"
               required
             />
@@ -156,7 +159,7 @@ export function CreatePledgeDialog() {
                       id="deadline"
                       type="button"
                       variant="outline"
-                      className="flex-1 justify-between rounded-[3px] font-normal"
+                      className="flex-1 justify-between font-normal"
                     >
                       <span className={deadlineDay ? undefined : "text-muted-foreground"}>
                         {deadlineDay
@@ -166,7 +169,7 @@ export function CreatePledgeDialog() {
                       <CalendarIcon className="text-muted-foreground" />
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto overflow-hidden rounded-[3px] p-0" align="start">
+                  <PopoverContent className="w-auto overflow-hidden p-0" align="start">
                     <Calendar
                       mode="single"
                       selected={deadlineDay}
@@ -210,16 +213,16 @@ export function CreatePledgeDialog() {
             <Input
               id="beneficiary"
               value={beneficiary}
-              onChange={(e) => setBeneficiary(e.target.value.trim())}
+              onChange={(e) => setBeneficiary(stripInvisible(e.target.value))}
               placeholder="0x… (community treasury, backers, a charity)"
               required
             />
           </div>
 
           <DialogFooter>
-            <Button type="submit" size="lg" className="rounded-[3px]" disabled={submitting}>
+            <Button type="submit" size="lg" disabled={submitting}>
               {submitting && <Loader2Icon className="animate-spin" />}
-              Seal it
+              Lock bond and pledge
             </Button>
           </DialogFooter>
         </form>

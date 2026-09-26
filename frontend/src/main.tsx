@@ -1,6 +1,6 @@
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
-import { RainbowKitProvider, lightTheme } from "@rainbow-me/rainbowkit"
+import { RainbowKitProvider, darkTheme } from "@rainbow-me/rainbowkit"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { BrowserRouter, Route, Routes } from "react-router"
 import { WagmiProvider } from "wagmi"
@@ -16,15 +16,15 @@ import Ledger from "@/pages/Ledger"
 
 const queryClient = new QueryClient()
 
-const theme = lightTheme({
-  accentColor: "#1b1915",
-  accentColorForeground: "#f7f2e6",
-  borderRadius: "small",
+const theme = darkTheme({
+  accentColor: "#ededed",
+  accentColorForeground: "#0a0a0a",
+  borderRadius: "medium",
   fontStack: "system",
 })
-theme.colors.modalBackground = "#faf6ec"
-theme.colors.connectButtonBackground = "#faf6ec"
-theme.fonts.body = '"Hanken Grotesk", ui-sans-serif, sans-serif'
+theme.colors.modalBackground = "#0e0e0e"
+theme.colors.connectButtonBackground = "#111111"
+theme.fonts.body = '"Geist Variable", ui-sans-serif, system-ui, sans-serif'
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

@@ -1,20 +1,18 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
 
 @theme inline {
-  --font-sans: "Hanken Grotesk", ui-sans-serif, sans-serif;
-  --font-heading: "Instrument Serif", ui-serif, serif;
-  --font-serif: "Instrument Serif", ui-serif, serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, monospace;
 
-  --color-paper: var(--paper);
-  --color-paper-deep: var(--paper-deep);
-  --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
-  --color-rule: var(--rule);
-  --color-vermilion: var(--vermilion);
-  --color-jade: var(--jade);
+  --color-raised: var(--raised);
+  --color-hairline: var(--hairline);
+  --color-signal: var(--signal);
+  --color-danger: var(--danger);
 
   --color-ring: var(--ring);
   --color-input: var(--input);
@@ -44,33 +42,32 @@
 }
 
 :root {
-  --paper: #f2ecdf;
-  --paper-deep: #e8dfcc;
-  --ink: #1b1915;
-  --ink-soft: #5f584b;
-  --rule: #cdc2aa;
-  --vermilion: #c23b22;
-  --jade: #2f6b4f;
+  color-scheme: dark;
 
-  --background: var(--paper);
-  --foreground: var(--ink);
-  --card: #faf6ec;
-  --card-foreground: var(--ink);
-  --popover: #faf6ec;
-  --popover-foreground: var(--ink);
-  --primary: var(--ink);
-  --primary-foreground: #f7f2e6;
-  --secondary: var(--paper-deep);
-  --secondary-foreground: var(--ink);
-  --muted: #ebe3d1;
-  --muted-foreground: var(--ink-soft);
-  --accent: var(--paper-deep);
-  --accent-foreground: var(--ink);
-  --destructive: var(--vermilion);
-  --border: var(--rule);
-  --input: #c4b89d;
-  --ring: #8a7d63;
-  --radius: 0.25rem;
+  --raised: #111111;
+  --hairline: #1f1f1f;
+  --signal: #45f0a1;
+  --danger: #ff5c5c;
+
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --card: #0e0e0e;
+  --card-foreground: #ededed;
+  --popover: #111111;
+  --popover-foreground: #ededed;
+  --primary: #ededed;
+  --primary-foreground: #0a0a0a;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #ededed;
+  --muted: #1a1a1a;
+  --muted-foreground: #8f8f8f;
+  --accent: #1a1a1a;
+  --accent-foreground: #ededed;
+  --destructive: var(--danger);
+  --border: #262626;
+  --input: #2e2e2e;
+  --ring: #5c5c5c;
+  --radius: 0.5rem;
 }
 
 @layer base {
@@ -80,51 +77,32 @@
   html {
     @apply font-sans;
     -webkit-font-smoothing: antialiased;
+    font-feature-settings: "ss01";
   }
   body {
     @apply bg-background text-foreground;
-    /* paper grain */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
   ::selection {
-    background: color-mix(in srgb, var(--vermilion) 22%, transparent);
+    background: color-mix(in srgb, var(--signal) 30%, transparent);
   }
 }
 
 @layer components {
-  .ruled {
-    background-image: repeating-linear-gradient(
-      to bottom,
-      transparent 0,
-      transparent 31px,
-      color-mix(in srgb, var(--rule) 55%, transparent) 31px,
-      color-mix(in srgb, var(--rule) 55%, transparent) 32px
-    );
-  }
   .eyebrow {
-    @apply font-mono text-[0.7rem] tracking-[0.18em] uppercase text-ink-soft;
+    @apply font-mono text-[0.7rem] tracking-[0.14em] text-muted-foreground uppercase;
   }
-}
-
-@keyframes stamp-in {
-  0% {
-    opacity: 0;
-    transform: scale(1.9) rotate(var(--stamp-rotate, -9deg));
-  }
-  60% {
-    opacity: 1;
-    transform: scale(0.94) rotate(var(--stamp-rotate, -9deg));
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) rotate(var(--stamp-rotate, -9deg));
+  /* Dot grid that fades out downward, used behind hero sections. */
+  .dot-grid {
+    background-image: radial-gradient(circle at 1px 1px, #2a2a2a 1px, transparent 0);
+    background-size: 22px 22px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 30%, transparent 75%);
   }
 }
 
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -132,16 +110,43 @@
   }
 }
 
-.animate-stamp {
-  animation: stamp-in 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+/* A validator casting its vote: dim -> lit. */
+@keyframes vote {
+  from {
+    background: var(--raised);
+    border-color: var(--border);
+    box-shadow: none;
+  }
+  to {
+    background: color-mix(in srgb, var(--signal) 18%, transparent);
+    border-color: var(--signal);
+    box-shadow: 0 0 18px -4px color-mix(in srgb, var(--signal) 60%, transparent);
+  }
 }
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .animate-rise {
-  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.animate-vote {
+  animation: vote 0.35s ease-out both;
+}
+.animate-fade {
+  animation: fade-in 0.4s ease-out both;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-stamp,
-  .animate-rise {
-    animation: none;
+  .animate-rise,
+  .animate-vote,
+  .animate-fade {
+    animation-duration: 1ms;
   }
 }

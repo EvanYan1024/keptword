@@ -16,9 +16,9 @@ const SECTIONS = [
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
-    <section id={id} className="border-rule scroll-mt-24 border-t pt-10 first:border-t-0 first:pt-0">
-      <h2 className="font-serif text-4xl leading-tight">{title}</h2>
-      <div className="text-ink/90 mt-5 grid gap-4 leading-relaxed [&_code]:bg-paper-deep [&_code]:rounded-[2px] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.85em]">
+    <section id={id} className="scroll-mt-24 border-t pt-10 first:border-t-0 first:pt-0">
+      <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
+      <div className="text-foreground/90 mt-5 grid gap-4 leading-relaxed [&_code]:bg-raised [&_code]:rounded-[4px] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.85em]">
         {children}
       </div>
     </section>
@@ -28,7 +28,7 @@ function Section({ id, title, children }: { id: string; title: string; children:
 function Rule({ n, children }: { n: string; children: ReactNode }) {
   return (
     <li className="grid grid-cols-[2.5rem_1fr] gap-2">
-      <span className="text-vermilion font-serif text-2xl italic leading-none">{n}</span>
+      <span className="text-signal font-mono text-sm leading-6">{n}</span>
       <span>{children}</span>
     </li>
   )
@@ -49,7 +49,7 @@ export default function Docs() {
         <p className="eyebrow">Documentation</p>
         <nav className="mt-4 grid gap-2.5">
           {SECTIONS.map((s) => (
-            <a key={s.id} href={`#${s.id}`} className="text-ink-soft hover:text-vermilion text-sm transition-colors">
+            <a key={s.id} href={`#${s.id}`} className="text-muted-foreground hover:text-foreground text-sm transition-colors">
               {s.title}
             </a>
           ))}
@@ -58,10 +58,8 @@ export default function Docs() {
 
       <article className="grid max-w-3xl gap-14">
         <header>
-          <h1 className="font-serif text-6xl leading-none">
-            How <em>KeptWord</em> works
-          </h1>
-          <p className="text-ink-soft mt-5 text-lg">
+          <h1 className="text-5xl font-semibold tracking-[-0.04em]">How KeptWord works</h1>
+          <p className="text-muted-foreground mt-5 text-lg">
             An accountability bond: money behind a public promise, released by the consensus of AI validators on GenLayer.
           </p>
         </header>
@@ -82,7 +80,7 @@ export default function Docs() {
         <Section id="lifecycle" title="Pledge lifecycle">
           <ol className="grid gap-4">
             <Rule n="1">
-              <strong>Under seal.</strong> You call <code>create_pledge</code> with the GEN bond attached. The bond is held by
+              <strong>Active.</strong> You call <code>create_pledge</code> with the GEN bond attached. The bond is held by
               the contract.
             </Rule>
             <Rule n="2">
@@ -162,9 +160,9 @@ export default function Docs() {
         </Section>
 
         <Section id="contract" title="Contract reference">
-          <div className="border-ink/70 overflow-x-auto rounded-[3px] border">
+          <div className="overflow-x-auto rounded-xl border">
             <table className="w-full text-left text-sm">
-              <thead className="bg-paper-deep">
+              <thead className="bg-raised">
                 <tr>
                   <th className="eyebrow px-4 py-3 font-normal">Method</th>
                   <th className="eyebrow px-4 py-3 font-normal">Kind</th>
@@ -173,9 +171,9 @@ export default function Docs() {
               </thead>
               <tbody>
                 {API.map(([m, kind, desc]) => (
-                  <tr key={m} className="border-rule border-t align-top">
+                  <tr key={m} className="border-t align-top">
                     <td className="px-4 py-3 font-mono text-xs">{m}</td>
-                    <td className="text-ink-soft px-4 py-3 font-mono text-xs whitespace-nowrap">{kind}</td>
+                    <td className="text-muted-foreground px-4 py-3 font-mono text-xs whitespace-nowrap">{kind}</td>
                     <td className="px-4 py-3">{desc}</td>
                   </tr>
                 ))}
@@ -190,13 +188,13 @@ export default function Docs() {
 
         <Section id="network" title="Network">
           <dl className="grid grid-cols-[9rem_1fr] gap-y-2 font-mono text-sm">
-            <dt className="text-ink-soft">Network</dt>
+            <dt className="text-muted-foreground">Network</dt>
             <dd>GenLayer Studionet</dd>
-            <dt className="text-ink-soft">Chain ID</dt>
+            <dt className="text-muted-foreground">Chain ID</dt>
             <dd>61999</dd>
-            <dt className="text-ink-soft">RPC</dt>
+            <dt className="text-muted-foreground">RPC</dt>
             <dd>https://studio.genlayer.com/api</dd>
-            <dt className="text-ink-soft">Contract</dt>
+            <dt className="text-muted-foreground">Contract</dt>
             <dd className="break-all">{CONTRACT_ADDRESS}</dd>
           </dl>
           <p>
@@ -226,16 +224,16 @@ export default function Docs() {
               ["Is this a court?", "No. It’s an agreed, evidence-based settlement mechanism for bonds you choose to post."],
             ].map(([q, a]) => (
               <div key={q}>
-                <dt className="font-serif text-2xl">{q}</dt>
-                <dd className="text-ink-soft mt-1">{a}</dd>
+                <dt className="font-medium">{q}</dt>
+                <dd className="text-muted-foreground mt-1">{a}</dd>
               </div>
             ))}
           </dl>
         </Section>
 
-        <p className="border-ink/80 border-t pt-8">
+        <p className="border-t pt-8">
           Ready?{" "}
-          <Link to="/app" className="text-vermilion font-serif text-2xl italic underline-offset-4 hover:underline">
+          <Link to="/app" className="text-signal font-medium underline-offset-4 hover:underline">
             Put your word on the ledger →
           </Link>
         </p>

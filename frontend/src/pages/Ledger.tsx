@@ -10,7 +10,7 @@ type Filter = "all" | PledgeStatus
 
 const FILTERS: { key: Filter; label: string }[] = [
   { key: "all", label: "All" },
-  { key: "active", label: "Under seal" },
+  { key: "active", label: "Active" },
   { key: "kept", label: "Kept" },
   { key: "broken", label: "Broken" },
 ]
@@ -37,34 +37,34 @@ export default function Ledger() {
       <div className="flex flex-wrap items-end justify-between gap-6">
         <div>
           <p className="eyebrow">Public record</p>
-          <h1 className="mt-3 font-serif text-6xl leading-none">The Ledger</h1>
-          <p className="text-ink-soft mt-4 max-w-lg">
+          <h1 className="mt-3 text-5xl font-semibold tracking-[-0.04em]">The Ledger</h1>
+          <p className="text-muted-foreground mt-4 max-w-lg">
             Every pledge on KeptWord, its bond, its evidence, and — once judged — the validators’ verdict.
           </p>
         </div>
         <CreatePledgeDialog />
       </div>
 
-      <div className="border-ink/80 mt-10 flex flex-wrap gap-x-6 gap-y-2 border-b">
+      <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 border-b">
         {FILTERS.map((f) => (
           <button
             key={f.key}
             onClick={() => setFilter(f.key)}
             className={cn(
-              "-mb-px border-b-2 pb-3 font-mono text-xs tracking-[0.14em] uppercase transition-colors",
-              filter === f.key ? "border-vermilion text-ink" : "text-ink-soft hover:text-ink border-transparent",
+              "-mb-px border-b-2 pb-3 text-sm transition-colors",
+              filter === f.key ? "border-foreground text-foreground" : "text-muted-foreground hover:text-foreground border-transparent",
             )}
           >
-            {f.label} <span className="text-ink-soft">{count(f.key)}</span>
+            {f.label} <span className="text-muted-foreground">{count(f.key)}</span>
           </button>
         ))}
       </div>
 
       <section className="mt-8 grid gap-6 lg:grid-cols-2">
-        {error && <p className="text-vermilion text-sm">Couldn’t read the ledger: {error.message}</p>}
-        {isPending && <p className="text-ink-soft font-mono text-sm">Reading the ledger…</p>}
+        {error && <p className="text-danger text-sm">Couldn’t read the ledger: {error.message}</p>}
+        {isPending && <p className="text-muted-foreground font-mono text-sm">Reading the ledger…</p>}
         {pledges && shown.length === 0 && (
-          <p className="text-ink-soft font-serif text-2xl italic">
+          <p className="text-muted-foreground text-lg">
             {pledges.length === 0 ? "No pledges yet. Be the first to put your word on record." : "Nothing here yet."}
           </p>
         )}

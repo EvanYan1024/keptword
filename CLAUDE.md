@@ -117,7 +117,7 @@ The GenVM linter catches contract issues before deployment:
 - Wallet (RainbowKit/wagmi, Studionet chain): `frontend/src/lib/wagmi.ts`
 - Hooks (pledges query, signer from connected wallet): `frontend/src/hooks/useKeptWord.ts`
 - Pages: `frontend/src/pages/` (Landing `/`, Ledger `/app`, Docs `/docs`)
-- Design tokens (paper/ink/vermilion/jade) live in `frontend/src/index.css`
+- Dark theme tokens (background/raised/hairline, signal = mint accent, danger = red) and Geist fonts live in `frontend/src/index.css`
 
 ## AI Agent Skills
 
